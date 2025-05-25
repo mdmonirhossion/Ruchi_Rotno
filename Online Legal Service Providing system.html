@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Online Legal Service Provider</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(90deg, #1e3c72, #2a5298);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 1.5px;
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffdd57;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 3rem auto 5rem;
+      padding: 0 1rem;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(118, 75, 162, 0.4);
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 0;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    section.services {
+      margin-top: 4rem;
+    }
+
+    section.services h3 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2a5298;
+    }
+
+    .service-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      cursor: default;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .service-card h4 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: #764ba2;
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+
+    .service-card p {
+      font-size: 0.95rem;
+      color:#555;
+    }
+
+    section.contact {
+      margin-top: 5rem;
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    section.contact h3 {
+      text-align: center;
+      color: #2a5298;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 6px;
+      border: 1.8px solid #ccc;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #764ba2;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    button {
+      background: #764ba2;
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background: #5b3681;
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 1rem;
+      background: #d4edda;
+      color: #155724;
+      border: 1.8px solid #c3e6cb;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    footer {
+      background: linear-gradient(90deg, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 1rem 1rem;
+      font-size: 0.9rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.15);
+    }
+
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+      nav a {
+        margin-left: 1rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LegalEase</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-label="Hero section">
+      <h2>Your Trusted Online Legal Service</h2>
+      <p>Expert legal advice and consultation at your fingertips. Fast, professional, and secure legal assistance online.</p>
+    </section>
+
+    <section class="services" id="services" aria-label="Legal services offered">
+      <h3>Our Legal Services</h3>
+      <div class="service-list">
+        <article class="service-card" tabindex="0">
+          <h4>Family Law</h4>
+          <p>Divorce, child custody, adoption, and support services to protect your family rights.</p>
+        </article>
+        <article class="service-card" tabindex="0">
+          <h4>Business Law</h4>
+          <p>Contracts, business formation, compliance, and trademark consulting for entrepreneurs.</p>
+        </article>
+        <article class="service-card" tabindex="0">
+          <h4>Real Estate Law</h4>
+          <p>Property purchases, leases, zoning issues, and real estate disputes handled professionally.</p>
+        </article>
+        <article class="service-card" tabindex="0">
+          <h4>Criminal Defense</h4>
+          <p>Protect your rights with experienced legal defense for criminal charges and investigations.</p>
+        </article>
+        <article class="service-card" tabindex="0">
+          <h4>Employment Law</h4>
+          <p>Workplace rights, discrimination, contracts, and dispute resolutions to safeguard your job.</p>
+        </article>
+        <article class="service-card" tabindex="0">
+          <h4>Estate Planning</h4>
+          <p>Wills, trusts, probate, and inheritance planning to secure your legacy for loved ones.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-label="Contact form">
+      <h3>Request a Consultation</h3>
+      <form id="consultationForm" novalidate>
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" placeholder="your.email@example.com" required />
+
+        <label for="issue">Brief Description of Your Legal Issue *</label>
+        <textarea id="issue" name="issue" placeholder="Describe your legal matter" required></textarea>
+
+        <button type="submit">Submit Request</button>
+      </form>
+      <div class="success-message" id="successMessage" style="display:none;">Thank you! Your request has been received. We will contact you soon.</div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 LegalEase. All rights reserved.
+  </footer>
+
+  <script>
+    (function() {
+      const form = document.getElementById('consultationForm');
+      const successMessage = document.getElementById('successMessage');
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Simple validation
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const issue = form.issue.value.trim();
+        const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+
+        if (!name) {
+          alert('Please enter your full name.');
+          form.name.focus();
+          return;
+        }
+
+        if (!email || !emailPattern.test(email)) {
+          alert('Please enter a valid email address.');
+          form.email.focus();
+          return;
+        }
+
+        if (!issue) {
+          alert('Please describe your legal issue.');
+          form.issue.focus();
+          return;
+        }
+
+        // Simulate submission by showing success message
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+
+        // Optionally, store form data in localStorage as a simulation
+        let requests = JSON.parse(localStorage.getItem('legalRequests') || '[]');
+        requests.push({ name, email, issue, submittedAt: new Date().toISOString() });
+        localStorage.setItem('legalRequests', JSON.stringify(requests));
+      });
+    })();
+  </script>
+</body>
+</html>
+
