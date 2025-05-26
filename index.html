@@ -1,438 +1,359 @@
-import React, { useState } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ruchi Rotno Food Business</title>
+  <style>
+    /* CSS Reset */
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff8f0;
+      color: #4a2c2a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    ul {
+      list-style: none;
+    }
 
-const foodItems = [
-  {
-    id: 1,
-    name: 'Margherita Pizza',
-    category: 'Pizza',
-    description: 'Classic pizza with fresh mozzarella and basil.',
-    price: 14.99,
-    image:
-      'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 2,
-    name: 'Pepperoni Pizza',
-    category: 'Pizza',
-    description: 'Topped with pepperoni slices and cheese.',
-    price: 16.5,
-    image:
-      'https://images.unsplash.com/photo-1601924928312-37c4a389e45d?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 3,
-    name: 'Vegan Buddha Bowl',
-    category: 'Healthy',
-    description:
-      'Quinoa, fresh veggies, avocado, and protein-packed chickpeas.',
-    price: 13.75,
-    image:
-      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 4,
-    name: 'Chocolate Lava Cake',
-    category: 'Dessert',
-    description: 'Decadent molten chocolate cake with gooey center.',
-    price: 7.95,
-    image:
-      'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 5,
-    name: 'Spicy Chicken Wings',
-    category: 'Starters',
-    description: 'Wings tossed in a spicy sauce, served with dip.',
-    price: 12.5,
-    image:
-      'https://images.unsplash.com/photo-1604908554249-c1ee7a5d0827?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 6,
-    name: 'Caesar Salad',
-    category: 'Healthy',
-    description: 'Romaine lettuce, parmesan, croutons, Caesar dressing.',
-    price: 11.25,
-    image:
-      'https://images.unsplash.com/photo-1505253210342-0bfe3b46a619?auto=format&fit=crop&w=600&q=80',
-  },
-];
+    /* Navigation */
+    header {
+      background: #d95c30;
+      padding: 18px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(217, 92, 48, 0.5);
+    }
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff8f0;
+    }
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      user-select: none;
+      text-transform: uppercase;
+      cursor: default;
+      text-shadow: 0 0 8px #7a3c14;
+    }
+    nav ul {
+      display: flex;
+      gap: 28px;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      background-color: #7a3c14;
+      outline: none;
+    }
 
-const categories = ['All', ...new Set(foodItems.map((item) => item.category))];
+    /* Hero Section */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1500&q=80') center center/cover no-repeat;
+      padding: 120px 20px 140px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      user-select: none;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(217, 92, 48, 0.65);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      font-family: 'Poppins', sans-serif;
+      text-shadow: 0 3px 15px rgba(0,0,0,0.5);
+    }
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: 6px;
+    }
+    .hero p {
+      font-size: 1.55rem;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      margin-bottom: 40px;
+    }
+    .btn-primary {
+      background-color: #fff8f0;
+      color: #d95c30;
+      font-weight: 700;
+      padding: 14px 38px;
+      font-size: 1.2rem;
+      border-radius: 45px;
+      box-shadow: 0 6px 20px rgba(217, 92, 48, 0.5);
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+      user-select: none;
+      display: inline-block;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #d95c30;
+      color: #fff8f0;
+      outline: none;
+      transform: scale(1.05);
+    }
 
-export default function App() {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [cart, setCart] = useState({});
+    /* Main */
+    main {
+      max-width: 960px;
+      margin: 70px auto 80px;
+      padding: 0 20px;
+      flex-grow: 1;
+    }
 
-  const filteredFoodItems =
-    selectedCategory === 'All'
-      ? foodItems
-      : foodItems.filter((item) => item.category === selectedCategory);
+    /* Section titles */
+    h2.section-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 2.6rem;
+      text-align: center;
+      color: #d95c30;
+      margin-bottom: 26px;
+      user-select: none;
+    }
+    h2.section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: #7a3c14;
+      margin: 12px auto 0;
+      border-radius: 8px;
+    }
 
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      const existingQty = prevCart[item.id]?.quantity || 0;
-      return {
-        ...prevCart,
-        [item.id]: {
-          item,
-          quantity: existingQty + 1,
-        },
-      };
-    });
-  };
+    /* Menu Section */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 30px;
+    }
+    .menu-item {
+      background: #fff8f0;
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(234, 194, 173, 0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .menu-item:hover,
+    .menu-item:focus-within {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 36px rgba(217, 92, 48, 0.3);
+      outline: none;
+    }
+    .menu-item img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-bottom: 6px solid #d95c30;
+    }
+    .menu-info {
+      padding: 18px 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .menu-info h3 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #7a3c14;
+    }
+    .menu-info p {
+      font-size: 1rem;
+      color: #4a2c2a;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .menu-price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #d95c30;
+      margin-top: auto;
+      user-select: none;
+    }
 
-  const removeFromCart = (itemId) => {
-    setCart((prevCart) => {
-      const {[itemId]: removed, ...rest} = prevCart;
-      return rest;
-    });
-  };
+    /* About Section */
+    .about p {
+      font-size: 1.15rem;
+      color: #4a2c2a;
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.6;
+      user-select: text;
+    }
 
-  const changeQuantity = (itemId, delta) => {
-    setCart((prevCart) => {
-      const current = prevCart[itemId];
-      if (!current) return prevCart;
-      const newQty = current.quantity + delta;
-      if (newQty <= 0) {
-        const {[itemId]: removed, ...rest} = prevCart;
-        return rest;
+    /* Contact Section */
+    .contact {
+      background-color: #d95c30;
+      color: #fff8f0;
+      max-width: 600px;
+      margin: 80px auto 0;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 12px 30px rgba(217, 92, 48, 0.5);
+      text-align: center;
+      user-select: none;
+    }
+    .contact p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    .contact a {
+      color: #fff8f0;
+      font-weight: 700;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    .contact a:hover,
+    .contact a:focus {
+      border-color: #fff8f0;
+      outline: none;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: #7a3c14;
+      font-size: 0.9rem;
+      user-select: none;
+      padding: 24px 12px;
+      background: #fff8f0;
+      margin-top: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 650px) {
+      .hero h1 {
+        font-size: 2.8rem;
       }
-      return {
-        ...prevCart,
-        [itemId]: {
-          ...current,
-          quantity: newQty,
-        },
-      };
-    });
-  };
+      nav ul {
+        gap: 18px;
+      }
+      main {
+        margin: 40px 16px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav role="navigation" aria-label="Primary navigation">
+      <div class="logo" tabindex="0">Ruchi Rotno Food</div>
+      <ul>
+        <li><a href="#hero" tabindex="1">Home</a></li>
+        <li><a href="#menu" tabindex="2">Menu</a></li>
+        <li><a href="#about" tabindex="3">About</a></li>
+        <li><a href="#contact" tabindex="4">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  const totalPrice = Object.values(cart).reduce(
-    (sum, cartItem) => sum + cartItem.item.price * cartItem.quantity,
-    0
-  );
-
-  return (
-    <div style={styles.app}>
-      <header style={styles.header}>
-        <h1 style={styles.title}>Ruchi Rotno Food Recommendation & Ordering</h1>
-      </header>
-
-      <section style={styles.categorySection}>
-        <h2 style={styles.sectionTitle}>Filter by Category</h2>
-        <div style={styles.categories}>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              style={{
-                ...styles.categoryButton,
-                ...(selectedCategory === cat ? styles.categoryButtonActive : {}),
-              }}
-              aria-pressed={selectedCategory === cat}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section style={styles.foodListSection}>
-        <h2 style={styles.sectionTitle}>Recommended Foods</h2>
-        <div style={styles.foodGrid}>
-          {filteredFoodItems.map((item) => (
-            <article key={item.id} style={styles.foodCard} tabIndex={0}>
-              <img
-                src={item.image}
-                alt={item.name}
-                style={styles.foodImage}
-                loading="lazy"
-              />
-              <div style={styles.foodContent}>
-                <h3 style={styles.foodName}>{item.name}</h3>
-                <p style={styles.foodDescription}>{item.description}</p>
-                <div style={styles.foodFooter}>
-                  <span style={styles.foodPrice}>${item.price.toFixed(2)}</span>
-                  <button
-                    onClick={() => addToCart(item)}
-                    style={styles.addButton}
-                    aria-label={`Add ${item.name} to order`}
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section style={styles.cartSection}>
-        <h2 style={styles.sectionTitle}>Your Order</h2>
-        {Object.keys(cart).length === 0 ? (
-          <p style={{ fontStyle: 'italic', textAlign: 'center' }}>
-            No items added yet.
-          </p>
-        ) : (
-          <div>
-            {Object.values(cart).map(({ item, quantity }) => (
-              <div key={item.id} style={styles.cartItem}>
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  style={styles.cartItemImage}
-                  loading="lazy"
-                />
-                <div style={styles.cartItemDetails}>
-                  <h4 style={{ marginBottom: 8 }}>{item.name}</h4>
-                  <div style={styles.qtyControls}>
-                    <button
-                      onClick={() => changeQuantity(item.id, -1)}
-                      aria-label={`Decrease quantity of ${item.name}`}
-                      style={styles.qtyBtn}
-                    >
-                      -
-                    </button>
-                    <span aria-live="polite" aria-atomic="true" style={{margin: '0 10px'}}>
-                      {quantity}
-                    </span>
-                    <button
-                      onClick={() => changeQuantity(item.id, 1)}
-                      aria-label={`Increase quantity of ${item.name}`}
-                      style={styles.qtyBtn}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    style={styles.removeBtn}
-                    aria-label={`Remove ${item.name} from order`}
-                  >
-                    Remove
-                  </button>
-                </div>
-                <div style={styles.cartItemPrice}>
-                  ${(item.price * quantity).toFixed(2)}
-                </div>
-              </div>
-            ))}
-            <div style={styles.cartTotal}>
-              <strong>Total: </strong>${totalPrice.toFixed(2)}
-            </div>
-            <button
-              onClick={() => alert('Order submitted! Thank you!')}
-              style={styles.checkoutBtn}
-            >
-              Place Order
-            </button>
-          </div>
-        )}
-      </section>
-
-      <footer style={styles.footer}>
-        &copy; 2024 Ruchi Rotno Food Recommendation System
-      </footer>
+  <section id="hero" class="hero" aria-label="Hero Section">
+    <div class="hero-content">
+      <h1>Ruchi Rotno Food Business</h1>
+      <p>Deliciousness delivered with love and quality, right to your table.</p>
+      <a href="#menu" class="btn-primary" tabindex="5">Explore Our Menu</a>
     </div>
-  );
-}
+  </section>
 
-const styles = {
-  app: {
-    maxWidth: 960,
-    margin: '0 auto',
-    padding: 16,
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-    color: '#222',
-  },
-  header: {
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '900',
-    letterSpacing: 1.5,
-  },
-  categorySection: {
-    marginBottom: 36,
-  },
-  sectionTitle: {
-    fontSize: 22,
-    marginBottom: 16,
-    fontWeight: '700',
-    textAlign: 'center',
-    color: '#2575fc',
-  },
-  categories: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: 12,
-    flexWrap: 'wrap',
-  },
-  categoryButton: {
-    padding: '8px 20px',
-    fontSize: 14,
-    fontWeight: '600',
-    borderRadius: 30,
-    border: '2px solid #2575fc',
-    backgroundColor: 'white',
-    color: '#2575fc',
-    cursor: 'pointer',
-    userSelect: 'none',
-    transition: 'background-color 0.3s, color 0.3s',
-  },
-  categoryButtonActive: {
-    backgroundColor: '#2575fc',
-    color: 'white',
-  },
-  foodListSection: {
-    marginBottom: 40,
-  },
-  foodGrid: {
-    display: 'grid',
-    gap: 24,
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-  },
-  foodCard: {
-    backgroundColor: 'white',
-    boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
-    borderRadius: 16,
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-    transition: 'transform 0.3s ease',
-    cursor: 'default',
-  },
-  foodImage: {
-    width: '100%',
-    height: 180,
-    objectFit: 'cover',
-  },
-  foodContent: {
-    padding: 16,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  foodName: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 8,
-    color: '#2575fc',
-  },
-  foodDescription: {
-    fontSize: 14,
-    color: '#555',
-    flexGrow: 1,
-  },
-  foodFooter: {
-    marginTop: 12,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  foodPrice: {
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  addButton: {
-    backgroundColor: '#2575fc',
-    border: 'none',
-    borderRadius: 24,
-    color: 'white',
-    padding: '8px 16px',
-    fontWeight: '700',
-    cursor: 'pointer',
-    userSelect: 'none',
-    transition: 'background-color 0.3s ease',
-  },
-  cartSection: {
-    marginBottom: 60,
-  },
-  cartItem: {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: '#e9f0ff',
-    padding: 12,
-    borderRadius: 12,
-    marginBottom: 16,
-  },
-  cartItemImage: {
-    width: 80,
-    height: 60,
-    objectFit: 'cover',
-    borderRadius: 12,
-    marginRight: 16,
-    flexShrink: 0,
-  },
-  cartItemDetails: {
-    flex: 1,
-  },
-  qtyControls: {
-    display: 'inline-flex',
-    alignItems: 'center',
-  },
-  qtyBtn: {
-    backgroundColor: '#2575fc',
-    border: 'none',
-    color: 'white',
-    fontWeight: '700',
-    cursor: 'pointer',
-    borderRadius: 4,
-    padding: '2px 10px',
-    fontSize: 16,
-    userSelect: 'none',
-    transition: 'background-color 0.3s ease',
-  },
-  removeBtn: {
-    marginTop: 8,
-    fontSize: 13,
-    color: '#a32c2c',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    fontWeight: '700',
-    userSelect: 'none',
-  },
-  cartItemPrice: {
-    fontWeight: '700',
-    fontSize: 16,
-    marginLeft: 12,
-    flexShrink: 0,
-    userSelect: 'none',
-  },
-  cartTotal: {
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'right',
-    marginTop: 16,
-    marginBottom: 16,
-    userSelect: 'none',
-  },
-  checkoutBtn: {
-    backgroundColor: '#2575fc',
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 18,
-    padding: '14px 30px',
-    borderRadius: 30,
-    cursor: 'pointer',
-    border: 'none',
-    userSelect: 'none',
-    display: 'block',
-    margin: '0 auto',
-    transition: 'background-color 0.3s ease',
-  },
-  footer: {
-    textAlign: 'center',
-    color: '#777',
-    fontSize: 14,
-    padding: 20,
-    userSelect: 'none',
-  },
-};
+  <main>
+    <section id="menu" aria-label="Menu Section">
+      <h2 class="section-title">Our Menu</h2>
+      <div class="menu-grid">
+        <article class="menu-item" tabindex="6" aria-label="Food: Margherita Pizza">
+          <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80" alt="Margherita Pizza"/>
+          <div class="menu-info">
+            <h3>Margherita Pizza</h3>
+            <p>Classic Italian pizza with fresh mozzarella, basil, and our signature tomato sauce.</p>
+            <div class="menu-price">$14.99</div>
+          </div>
+        </article>
+        <article class="menu-item" tabindex="7" aria-label="Food: Spicy Chicken Wings">
+          <img src="https://images.unsplash.com/photo-1604908554249-c1ee7a5d0827?auto=format&fit=crop&w=600&q=80" alt="Spicy Chicken Wings" />
+          <div class="menu-info">
+            <h3>Spicy Chicken Wings</h3>
+            <p>Juicy wings tossed in a special spicy sauce, served with creamy dipping sauce.</p>
+            <div class="menu-price">$12.50</div>
+          </div>
+        </article>
+        <article class="menu-item" tabindex="8" aria-label="Food: Vegan Buddha Bowl">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Vegan Buddha Bowl" />
+          <div class="menu-info">
+            <h3>Vegan Buddha Bowl</h3>
+            <p>A nourishing bowl with quinoa, fresh veggies, avocado, and protein-packed chickpeas.</p>
+            <div class="menu-price">$13.75</div>
+          </div>
+        </article>
+        <article class="menu-item" tabindex="9" aria-label="Food: Chocolate Lava Cake">
+          <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80" alt="Chocolate Lava Cake" />
+          <div class="menu-info">
+            <h3>Chocolate Lava Cake</h3>
+            <p>Decadent molten chocolate cake with a warm, gooey center – a chocolate lover’s dream.</p>
+            <div class="menu-price">$7.95</div>
+          </div>
+        </article>
+      </div>
+    </section>
 
+    <section id="about" class="about" aria-label="About Section">
+      <h2 class="section-title">About Us</h2>
+      <p>
+        At Ruchi Rotno Food Business, we believe that great food brings people together.  
+        Our commitment is to provide quality ingredients, authentic flavors, and warm hospitality. Whether dining in or ordering online, your satisfaction is our priority.
+      </p>
+    </section>
+
+    <section id="contact" class="contact" aria-label="Contact Section">
+      <h2 class="section-title">Contact Us</h2>
+      <p>Got questions or want to place an order? We’re here to help!</p>
+      <p>Email: <a href="mailto:info@ruchirotnofood.com" tabindex="10">info@ruchirotnofood.com</a></p>
+      <p>Phone: <a href="phone" tabindex="11">01770183572</a></p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 Ruchi Rotno Food Business. All rights reserved.
+  </footer>
+</body>
+</html>
